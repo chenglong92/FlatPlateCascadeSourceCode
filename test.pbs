@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -N test.pbs
+#PBS -q batch
+#PBS -l nodes=node1:ppn=4
+#PBS -o /home/ChenLong/test.log
+#PBS -e  /home/ChenLong/test.err  
+
+NSLOTS=`cat ${PBS_NODEFILE} | wc -l`
+#cat $PBS_NODEFILE >NODEFILE
+
+cd $PBS_O_WORKDIR
+MPIRUN=/opt/intel/impi/5.0.2.044/intel64/bin/mpirun
+PROGRAM=/home/ChenLong/Documents/FlatPlateCascade/Main.exe
+#####$MPIRUN -machinefile $PBS_NODEFILE -np $NSLOTS   ./main.exe
+$MPIRUN -machinefile $PBS_NODEFILE -np $NSLOTS   $PROGRAM 
